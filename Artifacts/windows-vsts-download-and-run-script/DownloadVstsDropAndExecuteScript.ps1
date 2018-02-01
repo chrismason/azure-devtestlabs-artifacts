@@ -58,16 +58,23 @@ function Set-AuthHeaders {
     return @{ Authorization = "Basic $basicAuth" }
 }
 
-function Get-BuildDefinitionId {
-    [CmdletBinding()]
-    param (
-        [string] $BuildDefinitionUri,
-        [Hashtable] $Headers
-    )
+function Get-BuildDefinitionId { 
+    [CmdletBinding()] 
+    param ( 
+        [string] $BuildDefinitionUri, 
+        [Hashtable] $Headers 
+    ) 
 
-    Write-Host "Getting build definition ID from $BuildDefinitionUri"
-    $buildDef = Invoke-RestMethod -Uri $BuildDefinitionUri -Headers $Headers -Method Get
-    return $buildDef.value.id
+    $null = ( 
+        Write-Host "Getting build definition ID from $BuildDefinitionUri" 
+    ) 
+    $buildDef = Invoke-RestMethod -Uri $BuildDefinitionUri -Headers $Headers -Method Get 
+    $null = ( 
+        Write-Host "$(ConvertTo-Json $buildDef -Depth 9)" 
+    ) 
+
+    return $buildDef.value.id 
+
 }
 
 function Get-LatestBuild {
